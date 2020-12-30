@@ -1,0 +1,23 @@
+type User{
+  _id: ID!
+  email: String!
+  userName: String!
+  loginSecret: String
+  likes: [Like!]!
+  todos: [Todo!]!
+  isSelf: Boolean!
+}
+
+type Todo{
+  _id: ID!
+  todo: String!
+  user: User!
+  likes: [Like!]!
+  isLiked: Boolean!
+}
+
+type Like{
+  _id: ID!
+  user: User!
+  todo: Todo!
+}

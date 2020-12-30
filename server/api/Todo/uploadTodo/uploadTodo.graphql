@@ -1,0 +1,3 @@
+type Mutation{
+  uploadTodo(todo: String!): Boolean!
+}
