@@ -12,6 +12,10 @@ const TodoSchema = new mongoose.Schema({
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'like'
+  }],
+  comments: [{
+    text: String,
+    userName: String
   }]
 });
 

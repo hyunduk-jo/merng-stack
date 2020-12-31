@@ -13,6 +13,7 @@ type Todo{
   todo: String!
   user: User!
   likes: [Like!]!
+  comments: [Comment!]!
   isLiked: Boolean!
   likesCount: Int!
 }
@@ -21,4 +22,10 @@ type Like{
   _id: ID!
   user: User!
   todo: Todo!
+}
+
+type Comment{
+  _id: ID!
+  text: String!
+  userName: String!
 }

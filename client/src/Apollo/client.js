@@ -1,4 +1,4 @@
-/* import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -35,9 +35,9 @@ const client = new ApolloClient({
   }
 })
 
-export default client; */
+export default client;
 
-import ApolloClient from 'apollo-boost';
+/* import ApolloClient from 'apollo-boost';
 import { defaults, resolvers } from './localStorage';
 
 const client = new ApolloClient({
@@ -51,4 +51,4 @@ const client = new ApolloClient({
   }
 })
 
-export default client;
+export default client; */

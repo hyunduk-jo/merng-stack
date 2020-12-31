@@ -7,7 +7,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body{
-    background-color: #eae7dc;
+    background-color: #D7BFA7;
   }
   button, input{
     outline: none;

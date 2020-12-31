@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { gql } from "apollo-boost";
+import { locatedError } from "graphql";
 import { useState } from "react";
 import styled from "styled-components"
 import Button from "./Button";
@@ -14,9 +15,7 @@ const Container = styled.div`
   border-radius: 10px;
   margin: 20px;
   padding: 15px;
-  box-sizing: border-box;
-  background-color: #4e4e50;
-  color: white;
+  background-color: #3a4660;
   button{
     outline: none;
   }
@@ -68,6 +67,9 @@ const Input = styled.div`
     fill: white;
   }
 `;
+const LikesCountCon = styled.div`
+
+`;
 //---------------------------------------------------------STYLED COMPONENT END----------------------------------------------------
 
 const EDIT_TODO = gql`
@@ -81,13 +83,19 @@ const TOGGLE_LIKE = gql`
     toggleLike(todoId: $todoId)
   }
 `
-
+const ADD_COMMENT = gql`
+  mutation addComment($text: String!, $todoId: String!){
+    addComment(text: $text, todoId: $todoId)
+  }
+`;
 //-----------------------------------------------------------USE MUTATION END------------------------------------------------------
 
 const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
   const [updateState, setUpdateState] = useState(false);
   const [update, setUpdate] = useState('');
   const [likeState, setLikeState] = useState(isLiked);
+  const [commentState, setCommentState] = useState(false);
+  const [addComment, setAddComment] = useState('');
 
   const [editTodoMutation] = useMutation(EDIT_TODO);
 
@@ -121,10 +129,28 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
       setLikeState(true);
     }
   }
+
+  const [addCommentMutation] = useMutation(ADD_COMMENT);
+  const onComment = async () => {
+    if (addComment !== "") {
+      try {
+        const { data: { addComment: newComment } } = await addCommentMutation({ variables: { text: addComment, todoId: _id } });
+        if (newComment) {
+          alert('Comment saved!!');
+        } else {
+          alert(`Can't create comment, try later`);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      alert("Comment should not be empty");
+    }
+  }
   return <Container>
     <TextCon>
-      <Text size="23" weight="600">{todo}</Text>
-      <Text size="18" weight="600">{userName}</Text>
+      <Text size="23" weight="600" color="#ed8a63">{todo}</Text>
+      <Text size="18" weight="600" color="white">{userName}</Text>
     </TextCon>
     {
       isSelf ? (
@@ -132,17 +158,23 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
           <Form>
             <ButtonCon>
               <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-              <Button text={<Bubble size="29" />} color="#3500d3" />
+              <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(!commentState)} />
               <Button text={<Update size="29" />} color={"#f3ca20"} onClick={() => setUpdateState(!updateState)} />
               <Button text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
             </ButtonCon>
-            <span>LikesCount: {likesCount}</span>
+            <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
           </Form>
           <Input>
             {
               updateState === true ? <>
                 <input placeholder="Write to update Todo" onChange={e => setUpdate(e.target.value)} />
                 <Button text={<Submit size="16" />} color="grey" onClick={onUpdate} />
+              </> : null
+            }
+            {
+              commentState === true ? <>
+                <input placeholder="Write a comment" onChange={e => setAddComment(e.target.value)} />
+                <Button text={<Submit size="16" />} color="grey" onClick={onComment} />
               </> : null
             }
           </Input>
@@ -154,7 +186,7 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
                 <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
                 <Button text={<Bubble size="29" />} color="#3500d3" />
               </ButtonCon>
-              <span>LikesCount: {likesCount}</span>
+              <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
             </Form>
           </>
         )
