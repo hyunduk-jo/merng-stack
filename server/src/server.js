@@ -23,5 +23,5 @@ const server = new ApolloServer({ schema, context: ({ req }) => ({ req, isAuthen
 
 server.applyMiddleware({ app });
 
-mongoose.connect(process.env.MONGO_STRING, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true });
+mongoose.connect(process.env.MONGO_STRING, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }, () => console.log(`✅ MongoDB Connected`));
 app.listen(PORT, () => console.log(`🚀 Server Running on http://localhost:${PORT}/graphql`));

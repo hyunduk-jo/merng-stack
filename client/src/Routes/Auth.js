@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { gql } from 'apollo-boost';
 import { useState } from 'react';
 import styled from 'styled-components';
+import Button from '../Components/Button';
 
 const Container = styled.div`
   display: flex;
@@ -15,10 +16,14 @@ const Form = styled.div`
   flex-direction: column;
   width: 300px;
   input,button{
+    border-radius: 10px;
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 7px;
     height: 30px;
+  }
+  input{
+    padding: 10px;
   }
 `;
 const StateChanger = styled.div`
@@ -28,6 +33,7 @@ const StateChanger = styled.div`
   span{
     cursor: pointer;
     color: skyblue;
+    margin-left: 5px;
   }
 `;
 //-------------------------------------------------------STYLED COMPONENTS END-------------------------------------------------
@@ -130,7 +136,7 @@ const Auth = () => {
         action === "login" && (
           <>
             <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-            <button onClick={onClick}>Log In</button>
+            <Button onClick={onClick} text="Log In" color="#FEAE51FF" weight="600" />
           </>
         )
       }
@@ -139,7 +145,7 @@ const Auth = () => {
           <>
             <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
             <input placeholder="Username" onChange={e => setUserName(e.target.value)} />
-            <button onClick={onClick}>Sign Up</button>
+            <Button onClick={onClick} text="Sign Up" color="#FEAE51FF" weight="600" />
           </>
         )
       }
@@ -147,7 +153,7 @@ const Auth = () => {
         action === "confirm" && (
           <>
             <input placeholder="Paste your secret" onChange={e => setSecret(e.target.value)} />
-            <button onClick={onClick}>Confirm</button>
+            <Button onClick={onClick} text="Confirm" color="#FEAE51FF" weight="600" />
           </>
         )
       }

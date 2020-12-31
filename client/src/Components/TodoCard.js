@@ -84,7 +84,7 @@ const TOGGLE_LIKE = gql`
 
 //-----------------------------------------------------------USE MUTATION END------------------------------------------------------
 
-const TodoCard = ({ todo, userName, _id, isSelf, isLiked }) => {
+const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
   const [updateState, setUpdateState] = useState(false);
   const [update, setUpdate] = useState('');
   const [likeState, setLikeState] = useState(isLiked);
@@ -121,7 +121,6 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked }) => {
       setLikeState(true);
     }
   }
-
   return <Container>
     <TextCon>
       <Text size="23" weight="600">{todo}</Text>
@@ -137,6 +136,7 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked }) => {
               <Button text={<Update size="29" />} color={"#f3ca20"} onClick={() => setUpdateState(!updateState)} />
               <Button text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
             </ButtonCon>
+            <span>LikesCount: {likesCount}</span>
           </Form>
           <Input>
             {
@@ -145,7 +145,6 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked }) => {
                 <Button text={<Submit size="16" />} color="grey" onClick={onUpdate} />
               </> : null
             }
-
           </Input>
         </>
       ) : (
@@ -153,8 +152,9 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked }) => {
             <Form>
               <ButtonCon>
                 <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-                <Button text={<Bubble size="30" />} color="#3500d3" />
+                <Button text={<Bubble size="29" />} color="#3500d3" />
               </ButtonCon>
+              <span>LikesCount: {likesCount}</span>
             </Form>
           </>
         )

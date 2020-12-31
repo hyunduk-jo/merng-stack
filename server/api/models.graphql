@@ -14,6 +14,7 @@ type Todo{
   user: User!
   likes: [Like!]!
   isLiked: Boolean!
+  likesCount: Int!
 }
 
 type Like{

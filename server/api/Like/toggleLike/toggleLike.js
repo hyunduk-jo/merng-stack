@@ -15,13 +15,14 @@ export default {
           if (like) {
             console.log("✅ Like found");
             console.log(like._id)
-            const idx = todo.likes.indexOf(like._id);
+            const idx = todo.likes.indexOf(user._id);
             if (idx > -1) todo.likes.splice(idx, 1);
             await Like.deleteOne({ user: user._id, todo: todoId });
           } else {
             console.log("❌ Like Not Found")
             const newLike = await Like.create({ user: user._id, todo: todoId });
-            todo.likes.push(newLike);
+            todo.likes.push(newLike.user);
+            //todo.likes.push(newLike);
           }
           await todo.save();
         } else {

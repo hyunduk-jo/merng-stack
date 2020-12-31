@@ -5,26 +5,43 @@ import styled from "styled-components";
 import Button from "../Components/Button";
 
 const Wrapper = styled.div`
-  display: flex;
+  position: absolute;
+  top: 0px;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 2;
+`;
+const ModalContainer = styled.div`
+  height: 100%;
+  position: absolute;
+  top: 0px;
   display: flex;
   align-items: center;
-  margin: 20px;
-  border: 1px solid black;
+  justify-content: center;
 `;
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 500px;
+  height: 200px;
+  border-radius: 30px;
+  background-color: #D4B996FF;
   input, button{
-    width: 100%;
-    box-sizing: border-box;
     text-align: center;
-    height: 30px;
-    margin-bottom: 10px;
+  }
+  input{
+    height: 35px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+  button{
+    margin-top: 20px;
   }
   flex-direction: column;
+  z-index: 3;
 `;
 
 const UPLOAD = gql`
@@ -33,12 +50,12 @@ const UPLOAD = gql`
   }
 `;
 
-const UploadModal = () => {
+const UploadModal = ({ setModal }) => {
   const [todo, setTodo] = useState('');
 
   const [uploadMutation] = useMutation(UPLOAD);
 
-  const onClick = async () => {
+  const onSubmit = async () => {
     if (todo !== "") {
       try {
         const { data: { uploadTodo } } = await uploadMutation({ variables: { todo } });
@@ -56,12 +73,16 @@ const UploadModal = () => {
     }
   }
 
-  return <Wrapper>
-    <Container>
-      <input placeholder="Write your today's todo" onChange={e => setTodo(e.target.value)} />
-      <Button color="#6EFA65" text="Submit" onClick={onClick} />
-    </Container>
-  </Wrapper>
+  return <>
+    <Wrapper onClick={() => setModal(false)}>
+    </Wrapper>
+    <ModalContainer>
+      <Container onClick={() => setModal(true)}>
+        <input placeholder="Write your today's todo" onChange={e => setTodo(e.target.value)} />
+        <Button color="#A07855FF" text="Submit" onClick={onSubmit} width="100" height="35" />
+      </Container>
+    </ModalContainer>
+  </>
 }
 
 export default UploadModal;

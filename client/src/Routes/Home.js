@@ -36,6 +36,7 @@ const GET_TODOS = gql`
     seeTodos{
       todo
       isLiked
+      likesCount
       _id
       likes{
         _id
@@ -52,12 +53,12 @@ const GET_TODOS = gql`
 
 const Home = () => {
   const { data, loading } = useQuery(GET_TODOS);
-  const [action, setAction] = useState(false);
+  const [modal, setModal] = useState(false);
   if (!loading && data) console.log(data.seeTodos);
   return <Wrapper>
-    <Button height="30" width="100" onClick={() => setAction(!action)} color="#e98074" text="Add Todo" />
+    <Button height="30" width="100" onClick={() => setModal(!modal)} color="#e98074" text="Add Todo" />
     {
-      action === false ? null : <UploadModal />
+      modal === false ? null : <UploadModal setModal={setModal} />
     }
     <TodoContainer>
       <MyCon>
@@ -66,7 +67,13 @@ const Home = () => {
           {
             !loading && data?.seeTodos && data.seeTodos.map(todo => {
               return todo.user.isSelf ?
-                <TodoCard key={todo._id} _id={todo._id} todo={todo.todo} userName={todo.user.userName} isSelf={todo.user.isSelf} isLiked={todo.isLiked} /> : null
+                <TodoCard key={todo._id}
+                  _id={todo._id}
+                  todo={todo.todo}
+                  userName={todo.user.userName}
+                  isSelf={todo.user.isSelf}
+                  isLiked={todo.isLiked}
+                  likesCount={todo.likesCount} /> : null
             }
             )
           }
@@ -78,7 +85,13 @@ const Home = () => {
           {
             !loading && data?.seeTodos && data.seeTodos.map(todo => {
               return todo.user.isSelf ?
-                null : <TodoCard key={todo._id} _id={todo._id} todo={todo.todo} userName={todo.user.userName} isSelf={todo.user.isSelf} isLiked={todo.isLiked} />
+                null : <TodoCard key={todo._id}
+                  _id={todo._id}
+                  todo={todo.todo}
+                  userName={todo.user.userName}
+                  isSelf={todo.user.isSelf}
+                  isLiked={todo.isLiked}
+                  likesCount={todo.likesCount} />
             }
             )
           }
