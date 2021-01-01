@@ -23,6 +23,10 @@ export default {
     likesCount: async (parent) => {
       const todo = await Todo.findOne({ _id: parent._id });
       return todo.likes.length;
+    },
+    commentsCount: async (parent) => {
+      const todo = await Todo.findOne({ _id: parent._id });
+      return todo.comments.length;
     }
   }
 }

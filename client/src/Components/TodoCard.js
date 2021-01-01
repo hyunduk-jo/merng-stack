@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { gql } from "apollo-boost";
-import { locatedError } from "graphql";
 import { useState } from "react";
 import styled from "styled-components"
 import Button from "./Button";
+import CommentModal from "./CommentModal";
 import { Bubble, EmptyHeart, FullHeart, Submit, Trash, Update } from "./Icons";
 
 const Container = styled.div`
@@ -30,6 +30,9 @@ const Text = styled.div`
   margin: 20px 0px;
 `;
 const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 10px;
   button{
     width: 40px;
@@ -67,9 +70,15 @@ const Input = styled.div`
     fill: white;
   }
 `;
-const LikesCountCon = styled.div`
-
+const LikesCountCon = styled.div``;
+const CountCon = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  color: white;
+  margin-top: 3px;
 `;
+
 //---------------------------------------------------------STYLED COMPONENT END----------------------------------------------------
 
 const EDIT_TODO = gql`
@@ -83,19 +92,14 @@ const TOGGLE_LIKE = gql`
     toggleLike(todoId: $todoId)
   }
 `
-const ADD_COMMENT = gql`
-  mutation addComment($text: String!, $todoId: String!){
-    addComment(text: $text, todoId: $todoId)
-  }
-`;
+
 //-----------------------------------------------------------USE MUTATION END------------------------------------------------------
 
-const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
+const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, commentsCount }) => {
   const [updateState, setUpdateState] = useState(false);
   const [update, setUpdate] = useState('');
   const [likeState, setLikeState] = useState(isLiked);
   const [commentState, setCommentState] = useState(false);
-  const [addComment, setAddComment] = useState('');
 
   const [editTodoMutation] = useMutation(EDIT_TODO);
 
@@ -129,24 +133,6 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
       setLikeState(true);
     }
   }
-
-  const [addCommentMutation] = useMutation(ADD_COMMENT);
-  const onComment = async () => {
-    if (addComment !== "") {
-      try {
-        const { data: { addComment: newComment } } = await addCommentMutation({ variables: { text: addComment, todoId: _id } });
-        if (newComment) {
-          alert('Comment saved!!');
-        } else {
-          alert(`Can't create comment, try later`);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      alert("Comment should not be empty");
-    }
-  }
   return <Container>
     <TextCon>
       <Text size="23" weight="600" color="#ed8a63">{todo}</Text>
@@ -158,11 +144,14 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
           <Form>
             <ButtonCon>
               <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-              <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(!commentState)} />
+              <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
               <Button text={<Update size="29" />} color={"#f3ca20"} onClick={() => setUpdateState(!updateState)} />
               <Button text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
             </ButtonCon>
-            <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
+            <CountCon>
+              <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
+              <div>{commentsCount === 1 ? '1 comment' : `${commentsCount} comments`}</div>
+            </CountCon>
           </Form>
           <Input>
             {
@@ -172,10 +161,7 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
               </> : null
             }
             {
-              commentState === true ? <>
-                <input placeholder="Write a comment" onChange={e => setAddComment(e.target.value)} />
-                <Button text={<Submit size="16" />} color="grey" onClick={onComment} />
-              </> : null
+              commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} /> : null
             }
           </Input>
         </>
@@ -184,10 +170,18 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount }) => {
             <Form>
               <ButtonCon>
                 <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-                <Button text={<Bubble size="29" />} color="#3500d3" />
+                <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
               </ButtonCon>
-              <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
+              <CountCon>
+                <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
+                <div>{commentsCount === 1 ? '1 comment' : `${commentsCount} comments`}</div>
+              </CountCon>
             </Form>
+            <Input>
+              {
+                commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} /> : null
+              }
+            </Input>
           </>
         )
     }

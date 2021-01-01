@@ -16,6 +16,7 @@ type Todo{
   comments: [Comment!]!
   isLiked: Boolean!
   likesCount: Int!
+  commentsCount: Int!
 }
 
 type Like{

@@ -45,6 +45,7 @@ const GET_TODOS = gql`
       todo
       isLiked
       likesCount
+      commentsCount
       _id
       likes{
         _id
@@ -90,7 +91,9 @@ const Home = () => {
                           userName={todo.user.userName}
                           isSelf={todo.user.isSelf}
                           isLiked={todo.isLiked}
-                          likesCount={todo.likesCount} /> : null
+                          likesCount={todo.likesCount}
+                          comments={todo.comments}
+                          commentsCount={todo.commentsCount} /> : null
                     }
                     )
                   }
@@ -108,7 +111,9 @@ const Home = () => {
                           userName={todo.user.userName}
                           isSelf={todo.user.isSelf}
                           isLiked={todo.isLiked}
-                          likesCount={todo.likesCount} />
+                          likesCount={todo.likesCount}
+                          comments={todo.comments}
+                          commentsCount={todo.commentsCount} />
                     }
                     )
                   }
