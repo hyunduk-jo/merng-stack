@@ -3,6 +3,7 @@ import { gql } from "apollo-boost";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
+import Comment from "./Comment";
 import { Submit } from "./Icons";
 
 const Wrapper = styled.div`
@@ -66,19 +67,6 @@ const CommentWrapper = styled.div`
     background: rgba(0,0,0,0.2);
   }
 `;
-const CommentsContainer = styled.div`
-  width: 80%;
-  display: flex;
-  font-size: 20px;
-  margin: 10px 0px;
-`;
-const CommentUserName = styled.div`
-  width: 20%;
-  font-weight: 600;
-`;
-const CommentText = styled.div`
-  width: 80%;
-`;
 
 
 const AddCommentCon = styled.div`
@@ -94,12 +82,8 @@ const Form = styled.div`
   display: flex;
   justify-content: space-around;
   input{
-    height: 40px;
+    height: 30px;
     background-color: rgba(0,0,0,0.1);
-  }
-  button{
-    width:40px;
-    height:40px;
   }
 `;
 //------------------------------------------------------------STYLED COMPONENT END---------------------------------------------
@@ -140,16 +124,12 @@ const CommentModal = ({ setCommentState, comments, todoId }) => {
       <Modal>
         <ModalHeader><span>Comments</span></ModalHeader>
         <CommentWrapper>
-          {comments.map(comment => <CommentsContainer key={comment._id}>
-            <CommentUserName>{comment.userName}</CommentUserName>
-            <CommentText >{comment.text}</CommentText>
-          </CommentsContainer>
-          )}
+          {comments.map(comment => <Comment key={comment._id} comment={comment} todoId={todoId} />)}
         </CommentWrapper>
         <AddCommentCon>
           <Form>
             <input placeholder="Write comment" onChange={e => setNewComment(e.target.value)} />
-            <Button text={<Submit />} color="grey" onClick={onClick} />
+            <Button width="30" height="30" text={<Submit />} color="grey" onClick={onClick} />
           </Form>
         </AddCommentCon>
       </Modal>

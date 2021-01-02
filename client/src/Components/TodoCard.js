@@ -35,8 +35,6 @@ const Form = styled.div`
   align-items: center;
   margin-top: 10px;
   button{
-    width: 40px;
-    height: 40px;
     fill: white;
     box-sizing: border-box;
     margin-bottom: 7px;
@@ -62,9 +60,7 @@ const Input = styled.div`
     outline: none;
   }
   button{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    border-radius: 20px;
   }
   svg{
     fill: white;
@@ -143,10 +139,10 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
         <>
           <Form>
             <ButtonCon>
-              <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-              <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
-              <Button text={<Update size="29" />} color={"#f3ca20"} onClick={() => setUpdateState(!updateState)} />
-              <Button text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
+              <Button width="40" height="40" onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
+              <Button width="40" height="40" text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
+              <Button width="40" height="40" text={<Update size="29" />} color={"#f3ca20"} onClick={() => setUpdateState(!updateState)} />
+              <Button width="40" height="40" text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
             </ButtonCon>
             <CountCon>
               <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
@@ -169,8 +165,8 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
           <>
             <Form>
               <ButtonCon>
-                <Button onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
-                <Button text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
+                <Button width="40" height="40" onClick={clickLike} text={likeState ? <FullHeart size="29" /> : <EmptyHeart size="29" />} color="#c3073f" />
+                <Button width="40" height="40" text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
               </ButtonCon>
               <CountCon>
                 <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>

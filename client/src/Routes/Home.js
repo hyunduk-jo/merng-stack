@@ -94,8 +94,7 @@ const Home = () => {
                           likesCount={todo.likesCount}
                           comments={todo.comments}
                           commentsCount={todo.commentsCount} /> : null
-                    }
-                    )
+                    })
                   }
                 </MyTodoCon>
               </MyCon>
@@ -114,8 +113,7 @@ const Home = () => {
                           likesCount={todo.likesCount}
                           comments={todo.comments}
                           commentsCount={todo.commentsCount} />
-                    }
-                    )
+                    })
                   }
                 </OthersTodoCon>
               </OthersCon>
