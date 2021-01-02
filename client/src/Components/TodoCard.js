@@ -97,6 +97,9 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
   const [likeState, setLikeState] = useState(isLiked);
   const [commentState, setCommentState] = useState(false);
 
+  const [likeCountS, setLikeCountS] = useState(likesCount);
+  const [commentCountS, setCommentCountS] = useState(commentsCount);
+
   const [editTodoMutation] = useMutation(EDIT_TODO);
 
   const onUpdate = async () => {
@@ -122,11 +125,13 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE);
 
   const clickLike = async () => {
-    await toggleLikeMutation({ variables: { todoId: _id } });
+    toggleLikeMutation({ variables: { todoId: _id } });
     if (likeState === true) {
       setLikeState(false);
+      setLikeCountS(likeCountS - 1);
     } else {
       setLikeState(true);
+      setLikeCountS(likeCountS + 1);
     }
   }
   return <Container>
@@ -145,8 +150,8 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
               <Button width="40" height="40" text={<Trash size="29" />} color={"#190061"} onClick={onDelete} />
             </ButtonCon>
             <CountCon>
-              <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
-              <div>{commentsCount === 1 ? '1 comment' : `${commentsCount} comments`}</div>
+              <LikesCountCon>{likeCountS === 1 ? '1 like' : `${likeCountS} likes`}</LikesCountCon>
+              <div>{commentCountS === 1 ? '1 comment' : `${commentCountS} comments`}</div>
             </CountCon>
           </Form>
           <Input>
@@ -157,7 +162,7 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
               </> : null
             }
             {
-              commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} /> : null
+              commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} setCommentCountS={setCommentCountS} commentCountS={commentCountS} /> : null
             }
           </Input>
         </>
@@ -169,13 +174,13 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
                 <Button width="40" height="40" text={<Bubble size="29" />} color="#3500d3" onClick={() => setCommentState(true)} />
               </ButtonCon>
               <CountCon>
-                <LikesCountCon>{likesCount === 1 ? '1 like' : `${likesCount} likes`}</LikesCountCon>
+                <LikesCountCon>{likeCountS === 1 ? '1 like' : `${likeCountS} likes`}</LikesCountCon>
                 <div>{commentsCount === 1 ? '1 comment' : `${commentsCount} comments`}</div>
               </CountCon>
             </Form>
             <Input>
               {
-                commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} /> : null
+                commentState === true ? <CommentModal setCommentState={setCommentState} comments={comments} todoId={_id} setCommentCountS={setCommentCountS} commentCountS={commentCountS} /> : null
               }
             </Input>
           </>

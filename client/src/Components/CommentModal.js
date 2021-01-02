@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   background-color: rgba(0,0,0,0.8);
   z-index: 2;
 `;
-
 const ModalContainer = styled.div`
   position: absolute;
   top: 0px;
@@ -27,7 +26,6 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const Modal = styled.div`
   width: 800px;
   min-height: 600px;
@@ -67,8 +65,6 @@ const CommentWrapper = styled.div`
     background: rgba(0,0,0,0.2);
   }
 `;
-
-
 const AddCommentCon = styled.div`
   height: 100px;
   width: 100%;
@@ -86,6 +82,7 @@ const Form = styled.div`
     background-color: rgba(0,0,0,0.1);
   }
 `;
+
 //------------------------------------------------------------STYLED COMPONENT END---------------------------------------------
 
 const ADD_COMMENT = gql`
@@ -93,9 +90,10 @@ const ADD_COMMENT = gql`
     addComment(text: $text, todoId: $todoId)
   }
 `;
+
 //--------------------------------------------------------------USE MUTATION END---------------------------------------------
 
-const CommentModal = ({ setCommentState, comments, todoId }) => {
+const CommentModal = ({ setCommentState, comments, todoId, commentCountS, setCommentCountS }) => {
   const [newComment, setNewComment] = useState('');
   const [addCommentMutation] = useMutation(ADD_COMMENT);
 
@@ -105,7 +103,8 @@ const CommentModal = ({ setCommentState, comments, todoId }) => {
         const { data: { addComment } } = await addCommentMutation({ variables: { todoId, text: newComment } });
         if (addComment) {
           alert("Comment successful");
-          window.location.reload();
+          setCommentCountS(commentCountS + 1);
+          //window.location.reload();
         } else {
           throw Error("Can't comment..");
         }
@@ -124,7 +123,7 @@ const CommentModal = ({ setCommentState, comments, todoId }) => {
       <Modal>
         <ModalHeader><span>Comments</span></ModalHeader>
         <CommentWrapper>
-          {comments.map(comment => <Comment key={comment._id} comment={comment} todoId={todoId} />)}
+          {comments.map(comment => <Comment key={comment._id} comment={comment} todoId={todoId} commentCountS={commentCountS} setCommentCountS={setCommentCountS} />)}
         </CommentWrapper>
         <AddCommentCon>
           <Form>
