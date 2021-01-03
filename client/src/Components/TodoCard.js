@@ -175,7 +175,7 @@ const TodoCard = ({ todo, userName, _id, isSelf, isLiked, likesCount, comments, 
               </ButtonCon>
               <CountCon>
                 <LikesCountCon>{likeCountS === 1 ? '1 like' : `${likeCountS} likes`}</LikesCountCon>
-                <div>{commentsCount === 1 ? '1 comment' : `${commentsCount} comments`}</div>
+                <div>{commentCountS === 1 ? '1 comment' : `${commentCountS} comments`}</div>
               </CountCon>
             </Form>
             <Input>

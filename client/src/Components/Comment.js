@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { gql } from 'apollo-boost';
-import { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -39,14 +38,12 @@ const DELETE_COMMENT = gql`
 const Comment = ({ comment, todoId, commentCountS, setCommentCountS }) => {
   const { data, loading } = useQuery(IS_MY_COMMENT, { variables: { userName: comment.userName } });
   const [deleteCommentMutation] = useMutation(DELETE_COMMENT);
-  console.log(comment)
-  //const [commentList, setCommentList] = useState()
 
   const onClick = async () => {
     try {
       await deleteCommentMutation({ variables: { todoId, commentId: comment._id } });
       setCommentCountS(commentCountS - 1);
-      //window.location.reload();
+      window.location.reload();
     } catch (e) {
       console.log(e.message);
       alert("Can't delete, try again");

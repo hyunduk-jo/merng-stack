@@ -1,3 +1,3 @@
 type Mutation{
-  addComment(text: String!, todoId: String!): Boolean!
+  addComment(text: String!, todoId: String!): Comment!
 }

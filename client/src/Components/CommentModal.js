@@ -87,7 +87,11 @@ const Form = styled.div`
 
 const ADD_COMMENT = gql`
   mutation addComment($todoId: String!, $text: String!){
-    addComment(text: $text, todoId: $todoId)
+    addComment(text: $text, todoId: $todoId){
+      _id
+      text
+      userName
+    }
   }
 `;
 
@@ -97,17 +101,16 @@ const CommentModal = ({ setCommentState, comments, todoId, commentCountS, setCom
   const [newComment, setNewComment] = useState('');
   const [addCommentMutation] = useMutation(ADD_COMMENT);
 
+  const [fakeCommentList, setFakeCommentList] = useState(comments);
+  console.log(fakeCommentList);
+
   const onClick = async () => {
     if (newComment !== "") {
       try {
         const { data: { addComment } } = await addCommentMutation({ variables: { todoId, text: newComment } });
-        if (addComment) {
-          alert("Comment successful");
-          setCommentCountS(commentCountS + 1);
-          //window.location.reload();
-        } else {
-          throw Error("Can't comment..");
-        }
+        setFakeCommentList([addComment, ...fakeCommentList]);
+        setCommentCountS(commentCountS + 1);
+        setNewComment('');
       } catch (e) {
         console.log(e.message);
         alert("Can't comment, try later");
@@ -123,7 +126,7 @@ const CommentModal = ({ setCommentState, comments, todoId, commentCountS, setCom
       <Modal>
         <ModalHeader><span>Comments</span></ModalHeader>
         <CommentWrapper>
-          {comments.map(comment => <Comment key={comment._id} comment={comment} todoId={todoId} commentCountS={commentCountS} setCommentCountS={setCommentCountS} />)}
+          {fakeCommentList.map(comment => <Comment key={comment._id} comment={comment} todoId={todoId} commentCountS={commentCountS} setCommentCountS={setCommentCountS} />)}
         </CommentWrapper>
         <AddCommentCon>
           <Form>
