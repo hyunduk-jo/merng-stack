@@ -12,11 +12,12 @@ const Container = styled.button`
   width: ${props => props.width}px;
   height: ${props => props.height}px;
   font-weight: ${props => props.weight};
+  padding: ${props => props.padding}px;
 `;
 
-const Button = ({ onClick, color, text, height, width, weight }) => {
+const Button = ({ onClick, color, text, height, width, weight, padding }) => {
 
-  return <Container onClick={onClick} color={color} width={width} height={height} weight={weight}>{text}</Container>
+  return <Container onClick={onClick} color={color} width={width} height={height} weight={weight} padding={padding}>{text}</Container>
 }
 
 export default Button;

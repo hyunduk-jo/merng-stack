@@ -17,7 +17,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <GlobalStyles />
-        <Header />
         <AppRouter isLoggedIn={isLoggedIn} />
       </BrowserRouter>
     </div>

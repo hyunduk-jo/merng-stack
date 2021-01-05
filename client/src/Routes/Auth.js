@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { gql } from 'apollo-boost';
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Button from '../Components/Button';
 
 const Container = styled.div`
@@ -11,29 +11,115 @@ const Container = styled.div`
   align-items: center;
   height: 90vh;
 `;
+
+const glow = keyframes`
+  0%{
+    
+  }
+  50%{
+    text-shadow: 0 0 10px white, 0 0 20px blue, 0 0 30px red;
+  }
+  100%{
+
+  }
+`;
+
+const Title = styled.div`
+  span{
+    font-size: 120px;
+    color: grey;
+    font-weight: 600;
+  }
+  span:first-child{
+    animation: ${glow} 1300ms ease-in-out infinite;
+    color: black;
+  }
+  span:nth-child(2){
+    animation: ${glow} 1300ms ease-in-out infinite 100ms;
+    color: black;
+  }
+  span:nth-child(3){
+    animation: ${glow} 1300ms ease-in-out infinite 200ms;
+    color: black;
+  }
+  span:nth-child(4){
+    animation: ${glow} 1300ms ease-in-out infinite 300ms;
+    color: black;
+  }
+  span:nth-child(5){
+    animation: ${glow} 1300ms ease-in-out infinite 400ms;
+    color: black;
+  }
+  span:nth-child(6){
+    margin-right: 20px;
+    animation: ${glow} 1300ms ease-in-out infinite 500ms;
+    color: black;
+  }
+  span:nth-child(7){
+    animation: ${glow} 1300ms ease-in-out infinite 600ms;
+    color: black;
+  }
+  span:nth-child(8){
+    animation: ${glow} 1300ms ease-in-out infinite 700ms;
+    color: black;
+  }
+  span:nth-child(9){
+    animation: ${glow} 1300ms ease-in-out infinite 800ms;
+    color: black;
+  }
+  span:nth-child(10){
+    animation: ${glow} 1300ms ease-in-out infinite 900ms;
+    color: black;
+  }
+  span:nth-child(11){
+    animation: ${glow} 1300ms ease-in-out infinite 1000ms;
+    color: black;
+  }
+  span:nth-child(12){
+    animation: ${glow} 1300ms ease-in-out infinite 1100ms;
+    color: black;
+  }
+  span:last-child{
+    animation: ${glow} 1300ms ease-in-out infinite 1200ms;
+    color: black;
+  }
+  margin-bottom: 10%;
+`;
 const Form = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 20%;
   input,button{
     border-radius: 10px;
     width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 7px;
-    height: 30px;
+    height: 60px;
+    font-size: 20px;
+    margin-bottom: 40px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 0 10px white, 0 0 20px red, inset 0 0 10px white, inset 0 0 20px red;
   }
   input{
-    padding: 10px;
+    text-align: center;
+  }
+  input::placeholder{
+    font-size: 20px;
+    color: grey;
+    font-weight: 600;
   }
 `;
 const StateChanger = styled.div`
-  width: 300px;
+  width: 20%;
   display: flex;
   justify-content: center;
+  font-size: 25px;
+  color: white;
+  text-shadow: 0 0 3px white, 0 0 6px white;
   span{
     cursor: pointer;
     color: skyblue;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 `;
 //-------------------------------------------------------STYLED COMPONENTS END-------------------------------------------------
@@ -131,11 +217,26 @@ const Auth = () => {
   }
 
   return <Container>
+  <Title>
+    <span>S</span>
+    <span>i</span>
+    <span>m</span>
+    <span>p</span>
+    <span>l</span>
+    <span>e</span>
+    <span>P</span>
+    <span>o</span>
+    <span>s</span>
+    <span>t</span>
+    <span>i</span>
+    <span>n</span>
+    <span>g</span>
+  </Title>
     <Form>
       {
         action === "login" && (
           <>
-            <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <input placeholder="Write Your Email" onChange={e => setEmail(e.target.value)} />
             <Button onClick={onClick} text="Log In" color="#FEAE51FF" weight="600" />
           </>
         )

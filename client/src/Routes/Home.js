@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Button from "../Components/Button";
 import Loader from "../Components/Loader";
 import TodoCard from "../Components/TodoCard";
@@ -13,6 +13,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  button{
+    border: 2px solid white;
+    box-shadow: 0 0 10px #fff, 0 0 20px #e60073,
+    inset 0 0 10px #fff, inset 0 0 20px #e60073;
+  }
 `;
 const TodoContainer = styled.div`
   width: 80%;
@@ -23,10 +28,22 @@ const MyCon = styled.div`
 const OthersCon = styled.div`
   min-height: 350px;
 `;
+
+const glow = keyframes`
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+`;
 const Text = styled.div`
+  font-family: 'Redressed', cursive;
   font-size: ${props => props.size}px;
   font-weight: ${props => props.weight};
-  color: ${props => props.color};
+  color: white;
+  animation: ${glow} 1s ease-in-out infinite alternate;
+  margin: 20px 0px;
 `;
 const MyTodoCon = styled.div`
   display: flex;
@@ -74,13 +91,13 @@ const Home = () => {
       loading ? <Loader size="50" /> :
         (
           <>
-            <Button height="30" width="100" onClick={() => setModal(!modal)} color="#e98074" text="Add Todo" />
+            <Button height="80" width="200" onClick={() => setModal(!modal)} color="transparent" padding="20" text="Add Todo" weight="600" />
             {
               modal === false ? null : <UploadModal setModal={setModal} />
             }
             <TodoContainer>
               <MyCon>
-                <Text color="#e85a4f" size="40" weight="600">My Todo</Text>
+                <Text color="#e85a4f" size="40" weight="600">My Post</Text>
                 <MyTodoCon>
                   {
                     !loading && data?.seeTodos && data.seeTodos.map(todo => {
@@ -99,7 +116,7 @@ const Home = () => {
                 </MyTodoCon>
               </MyCon>
               <OthersCon>
-                <Text color="#e85a4f" size="40" weight="600">Other's Todo</Text>
+                <Text color="#e85a4f" size="40" weight="600">Other's Post</Text>
                 <OthersTodoCon>
                   {
                     !loading && data?.seeTodos && data.seeTodos.map(todo => {

@@ -10,12 +10,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 290px;
-  height: 250px;
+  width: 350px;
+  height: 310px;
   border-radius: 10px;
   margin: 20px;
   padding: 15px;
-  background-color: #3a4660;
+  background-color: transparent;
+  border: 3px solid white;
+  box-shadow: 0 0 10px #fff, 0 0 20px #3a4660, 0 0 30px #3a4660,
+  inset 0 0 10px #fff, inset 0 0 20px #3a4660, inset 0 0 30px #3a4660;
   button{
     outline: none;
   }

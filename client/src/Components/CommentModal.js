@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(255,255,255,0.8);
   z-index: 2;
 `;
 const ModalContainer = styled.div`
@@ -29,7 +29,8 @@ const ModalContainer = styled.div`
 const Modal = styled.div`
   width: 800px;
   min-height: 600px;
-  background-color: white;
+  color: white;
+  background-color: black;
   display: flex;
   align-items: center;
   z-index: 3;
@@ -44,8 +45,10 @@ const ModalHeader = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid grey;
+  font-family: 'Redressed', cursive;
   font-size: 40px;
   font-weight: 600;
+  text-shadow: 0 0 10px #fff, 0 0 20px yellow;
 `;
 const CommentWrapper = styled.div`
   width: 100%;
@@ -78,8 +81,12 @@ const Form = styled.div`
   display: flex;
   justify-content: space-around;
   input{
+    border: 1px solid white;
     height: 30px;
     background-color: rgba(0,0,0,0.1);
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 0 3px white, 0 0 6px white, inset 0 0 3px white, inset 0 0 6px white;
   }
 `;
 
