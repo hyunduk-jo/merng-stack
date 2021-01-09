@@ -7,11 +7,12 @@ import schema from './schema';
 import './passport';
 import { authenticateJwt } from './passport';
 import { isAuthenticated } from './middleware';
+import asyncify from 'express-asyncify';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-const app = express();
+const app = asyncify(express());
 
 app.use(cors());
 app.use(morgan('dev'));
